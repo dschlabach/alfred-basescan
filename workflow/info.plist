@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>bundleid</key>
+		<string>dschlabach.basescan</string>
+		<key>category</key>
+		<string>Productivity</string>
+		<key>connections</key>
+		<dict>
+			<key>87201F07-2FD1-492C-81B9-A043207C0462</key>
+			<array>
+				<dict>
+					<key>destinationuid</key>
+					<string>2AA0E77B-1E1F-4851-97C3-CB84DA76DB6C</string>
+					<key>modifiers</key>
+					<integer>0</integer>
+					<key>modifiersubtext</key>
+					<string></string>
+					<key>vitoclose</key>
+					<false />
+				</dict>
+			</array>
+		</dict>
+		<key>createdby</key>
+		<string>Dan Schlabach</string>
+		<key>description</key>
+		<string>Quick links to BaseScan</string>
+		<key>disabled</key>
+		<false />
+		<key>name</key>
+		<string>BaseScan</string>
+		<key>objects</key>
+		<array>
+			<dict>
+				<key>config</key>
+				<dict>
+					<key>browser</key>
+					<string></string>
+					<key>skipqueryencode</key>
+					<false />
+					<key>skipvarencode</key>
+					<false />
+					<key>spaces</key>
+					<string></string>
+					<key>url</key>
+					<string></string>
+				</dict>
+				<key>type</key>
+				<string>alfred.workflow.action.openurl</string>
+				<key>uid</key>
+				<string>2AA0E77B-1E1F-4851-97C3-CB84DA76DB6C</string>
+				<key>version</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>config</key>
+				<dict>
+					<key>alfredfiltersresults</key>
+					<false />
+					<key>alfredfiltersresultsmatchmode</key>
+					<integer>0</integer>
+					<key>argumenttreatemptyqueryasnil</key>
+					<true />
+					<key>argumenttrimmode</key>
+					<integer>0</integer>
+					<key>argumenttype</key>
+					<integer>0</integer>
+					<key>escaping</key>
+					<integer>102</integer>
+					<key>keyword</key>
+					<string>bs||bss</string>
+					<key>queuedelaycustom</key>
+					<integer>3</integer>
+					<key>queuedelayimmediatelyinitially</key>
+					<true />
+					<key>queuedelaymode</key>
+					<integer>0</integer>
+					<key>queuemode</key>
+					<integer>1</integer>
+					<key>runningsubtext</key>
+					<string></string>
+					<key>script</key>
+					<string>#!/bin/bash query="$1" keyword="$alfred_workflow_keyword" # Set domain
+						based on keyword if [[ "$keyword" == "bss" ]]; then
+						domain="sepolia.basescan.org" network="Sepolia" else domain="basescan.org"
+						network="Base" fi # Function to create JSON item create_item() { local
+						title="$1" local subtitle="$2" local url="$3" echo
+						"{\"title\":\"$title\",\"subtitle\":\"$subtitle\",\"arg\":\"$url\",\"valid\":true}"
+						} # Initialize items array items="[" # Show help/default items if no query
+						if [[ -z "$query" ]]; then items+="$(create_item "Search $network Explorer"
+						"Enter address, tx, block, or name" "https://$domain")" items+=","
+						items+="$(create_item "Recent Blocks" "View latest blocks on $network"
+						"https://$domain/blocks")" items+="," items+="$(create_item "Recent
+						Transactions" "View latest transactions on $network" "https://$domain/txs")"
+						else if [[ "$query" =~ ^0x[a-fA-F0-9]{64}$ ]]; then items+="$(create_item
+						"View Transaction" "$query" "https://$domain/tx/$query")" elif [[ "$query"
+						=~ ^[0-9]+$ ]]; then items+="$(create_item "View Block #$query" "Open block
+						explorer" "https://$domain/block/$query")" elif [[ "$query" == *"."* ]];
+						then items+="$(create_item "Search Name: $query" "Lookup Base name"
+						"https://$domain/name-lookup-search?id=$query")" elif [[ "$query" =~
+						^0x[a-fA-F0-9]{40}$ ]]; then items+="$(create_item "View Address" "$query"
+						"https://$domain/address/$query")" elif [[ "$query" =~ ^[a-zA-Z0-9]+$ ]];
+						then items+="$(create_item "Search Name: $query.base.eth" "Lookup Base name"
+						"https://$domain/name-lookup-search?id=$query.base.eth")" fi fi items+="]"
+						echo "{\"items\":$items}"</string>
+					<key>scriptargtype</key>
+					<integer>1</integer>
+					<key>scriptfile</key>
+					<string></string>
+					<key>subtext</key>
+					<string>Paste a Basename, address, transaction hash, or block number</string>
+					<key>title</key>
+					<string>BaseScan</string>
+					<key>type</key>
+					<integer>0</integer>
+					<key>withspace</key>
+					<true />
+				</dict>
+				<key>type</key>
+				<string>alfred.workflow.input.scriptfilter</string>
+				<key>uid</key>
+				<string>87201F07-2FD1-492C-81B9-A043207C0462</string>
+				<key>version</key>
+				<integer>3</integer>
+			</dict>
+		</array>
+		<key>uidata</key>
+		<dict>
+			<key>2AA0E77B-1E1F-4851-97C3-CB84DA76DB6C</key>
+			<dict>
+				<key>xpos</key>
+				<real>640</real>
+				<key>ypos</key>
+				<real>265</real>
+			</dict>
+			<key>87201F07-2FD1-492C-81B9-A043207C0462</key>
+			<dict>
+				<key>xpos</key>
+				<real>360</real>
+				<key>ypos</key>
+				<real>270</real>
+			</dict>
+		</dict>
+		<key>userconfigurationconfig</key>
+		<array />
+		<key>version</key>
+		<string>1.0.0</string>
+		<key>webaddress</key>
+		<string>https://github.com/dschlabach/alfred-basescan</string>
+	</dict>
+</plist>
